@@ -1,0 +1,27 @@
+{
+  "name": "crypting",
+  "version": "1.0.0",
+  "description": "in this fisrt step we will creat the registration form using nodeJS and passport",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm run scss-compile",
+    "scss-compile": "node-sass -rw public/style/sass -o public/style/css",
+    "watch": "npm run scss-compile"
+  },
+  "author": "chenine azeddine",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.0",
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.5.5",
+    "express": "^4.14.0",
+    "express-session": "^1.14.2",
+    "express-validator": "^3.1.2",
+    "mongoose": "^4.7.4",
+    "node-sass": "^4.1.1",
+    "passport": "^0.3.2",
+    "passport-http": "^0.3.0",
+    "passport-local": "^1.0.0"
+  }
+}
