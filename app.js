@@ -1,6 +1,5 @@
 // requring modules
 const express = require('express');
-const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
@@ -9,15 +8,13 @@ const passport = require('passport');
 const path = require('path');
 
 
+
 //exporting router
 const layout = require(__dirname+'/routes/layouts.js');
 const user = require(__dirname+'/routes/user.js');
 
 
 
-// connecting to the data base
-mongoose.connect('mongodb://localhost:27017/letsMeet');
-var db=mongoose.connection;
 
 // setting the app
 var app=express();
