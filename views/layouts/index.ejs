@@ -1,6 +1,6 @@
-     <% if(data.newUser){%>
+     <% if(data.user){%>
     <h2 class="page-header">Profile</h2>
-    <p>Welcome  <strong><%= data.newUser.username%></strong>  to your profile</p>
+    <p>Welcome  <strong><%= data.user.username%></strong>  to your profile</p>
   <%}else{%>
         <div class="alert alert-danger"><h3>you need to register or to login to your account</h3></div>
       <%}%>

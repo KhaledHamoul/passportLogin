@@ -1,6 +1,15 @@
 
       <h2 class="page-header">Account Login</h2>
-    <form method="post" action="/users/login">
+      <%if(data.errors){
+          for(var i=0;i<data.errors.length;i++){%>
+          <div class="alert alert-danger"><h3><%= data.errors[i].msg%></h3></div>
+
+      <%}}%>
+      <%if(data.unknownUser==true){%>
+          <div class="alert alert-danger"><h3>wrong username password combination</h3></div>
+      <%}%>
+
+    <form method="post" action="/user/login">
     <div class="form-group">
       <label>Username</label>
       <input type="text" class="form-control" name="username" placeholder="Username">
@@ -11,4 +20,3 @@
     </div>
     <button type="submit" class="btn btn-default">Submit</button>
     </form>
-  

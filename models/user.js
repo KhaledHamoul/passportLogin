@@ -6,6 +6,7 @@ var userSchema=new mongoose.Schema({
   username:{
     type: String,
     required:true,
+    unique:true,
   },
   name :{
     type:String,
@@ -45,9 +46,6 @@ userSchema.methods.hashPassword=(password,callback)=>{
             throw err;
           }
       });
-}
-userSchema.methods.validatePassword=(userPassword,dbPassword,callback)=>{
-   bcrypt.compare(userPassword,dbPassword,callback)
 }
 
 var user=mongoose.model('user',userSchema);

@@ -1,6 +1,7 @@
+const user = require('../models/user.js');
+const bcrypt = require('bcryptjs');
+ var layout;
 exports.add=(req,rep)=>{
-   const user = require('../models/user.js');
-    var layout;
     var newUser=new user({});
 
 
@@ -38,7 +39,58 @@ exports.add=(req,rep)=>{
     layout="../layouts/index";
     rep.render("template/app",{data:{
           layout,
-          newUser
+          user:newUser
     }});
   }
+}
+
+exports.find=(req,rep)=>{
+  var perUser=new user({});
+
+
+ req.checkBody('username', 'username is required').notEmpty();
+ req.checkBody('password', 'not the same password').notEmpty();
+
+  errors=req.validationErrors();
+ if(errors){
+     layout="../layouts/login";
+     rep.status(400).render("template/app",{data:{
+                    layout,
+                    errors
+                  }
+                });
+ }else{
+
+  perUser.username=req.body.username,
+  user.findOne({username:perUser.username},(err,result)=>{
+     if(!err){
+          if(result){
+                bcrypt.compare(req.body.password,result.password,(err,res)=>{
+                  if(!err){
+                       if(res){
+                         layout="../layouts/index";
+                         perUser=result;
+                         rep.render("template/app",{data:{
+                               layout,
+                               user:perUser
+                         }});
+                       }
+                  }
+                });
+          }else{
+            layout="../layouts/login";
+            rep.status(401).render("template/app",{data:{
+                           layout,
+                           unknownUser:true,
+                         }
+                       });
+          }
+     }else{
+       throw err;
+     }
+
+  });
+
+
+}
 }
