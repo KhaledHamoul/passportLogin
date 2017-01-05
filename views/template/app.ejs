@@ -20,10 +20,12 @@
       <div class="header clearfix">
         <nav>
           <ul class="nav nav-pills pull-right">
-              <li role="presentation"><a href="/layout/index" >Dashboard</a></li>
-              <li role="presentation"><a href="/layout/logout">Logout</a></li>
+              <% if(user){%>
+              <li role="presentation"><a href="/user/logout">Logout</a></li>
+              <%}else{%>
               <li role="presentation"><a href="/layout/login" >Login</a></li>
               <li role="presentation"><a href="/layout/register">Register</a></li>
+            <%}%>
           </ul>
         </nav>
         <h3 class="text-muted">LoginApp</h3>

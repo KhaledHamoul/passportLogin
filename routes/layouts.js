@@ -1,7 +1,8 @@
 const express = require('express');
-const layoutesController = require('../controllers/layoutsController');
+const layoutesController = require('../controllers/layouts');
+const checkAuthentication = require('../controllers/modules/checkAuthentication');
 var router=express.Router();
 
 router.route("/:layout")
-            .get(layoutesController.sendLayout);
+            .get(checkAuthentication,layoutesController.sendLayout);
 module.exports=router;

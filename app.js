@@ -5,7 +5,9 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const expressValidator = require('express-validator');
 const passport = require('passport');
+const localStrategy = require('passport-local');
 const path = require('path');
+const flash = require('flash');
 
 
 
@@ -38,10 +40,15 @@ app.use(cookieParser());
 //setting up express-session
 app.use(session({
   secret: 'keyboard cat',
-  resave: false,
+  resave: true ,
   saveUninitialized: true,
-  cookie: { secure: true }
 }));
+
+//setting up passport middlware
+app.use(session());
+app.use(passport.initialize());
+app.use(passport.session());
+
 // setting up express-validator
 app.use(expressValidator({
   errorFormatter: function(param, msg, value) {
@@ -60,10 +67,16 @@ app.use(expressValidator({
   }
 }));
 
-//setting up passport middlware
-app.use(passport.initialize());
-app.use(passport.session());
+// setting up flash
+app.use(flash());
 
+
+
+//setting an important global varibles
+app.use((req,res,next)=>{
+  res.locals.user=req.user || null;
+  next();
+});
 //router middlware
 
 app.use("/layout",layout);
@@ -72,5 +85,5 @@ app.use("/user",user);
 
 //listning...
 app.listen(3000,(err)=>{
-  console.log("listning ...");
+  console.log("listning to the port number 3000 ...");
 });
