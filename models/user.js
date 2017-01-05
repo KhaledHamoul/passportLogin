@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const  PasswordHashingCycle = 8;
 
-mongoose.connect('mongodb://localhost:27017/letsMeet');
+mongoose.connect('mongodb://localhost:27017/yourDatabase');
 
 var userSchema=new mongoose.Schema({
   username:{
