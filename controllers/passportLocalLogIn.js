@@ -2,14 +2,14 @@ const passport = require('passport') , LocalStrategy = require('passport-local')
 const UserPrototype = require('../models/user');
 
 user=new UserPrototype({});
-exports.login=new LocalStrategy(
+module.exports=new LocalStrategy(
   function(usernameOrEmail,password,done) {
         user.getUserByUsernameOrEmail(usernameOrEmail,null,(err,userCredential)=>{
           if(err) throw err ;
           if(!userCredential) {
             return done(null,false); // with an error massege
           }
-          user.comparePassword(password,userCredential.password,(err,isMatch)=>{
+          user.comparePassword(password,userCredential.local.password,(err,isMatch)=>{
               if (isMatch) {
                 return done(null,userCredential);
               } else {

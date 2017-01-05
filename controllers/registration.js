@@ -21,10 +21,10 @@ const bcrypt = require('bcryptjs');
 
     // hydration
     user.username=req.body.username;
-    user.name =req.body.name;
+    user.local.name =req.body.name;
     user.email=req.body.email;
-    user.wilaya =req.body.city;
-    user.birthday=req.body.birthday;
+    user.local.wilaya =req.body.city;
+    user.local.birthday=req.body.birthday;
 
 
     // checking if te user dosn't exist
@@ -66,7 +66,7 @@ const bcrypt = require('bcryptjs');
                                               }
                                             });
                               }
-                    user.password=hashedPassword;
+                    user.local.password=hashedPassword;
                     user.save((err)=>{
                          if(err)  {
                                      layout="../layouts/register";

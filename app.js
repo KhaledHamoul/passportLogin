@@ -81,6 +81,7 @@ app.use((req,res,next)=>{
 
 app.use("/layout",layout);
 app.use("/user",user);
+app.use("/auth",user)
 
 
 //listning...

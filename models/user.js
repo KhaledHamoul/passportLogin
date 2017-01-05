@@ -5,38 +5,47 @@ const  PasswordHashingCycle = 8;
 mongoose.connect('mongodb://localhost:27017/letsMeet');
 
 var userSchema=new mongoose.Schema({
-  username:{
-    type: String,
-    required:true,
-    unique:true,
-  },
+local:{
   name :{
     type:String,
-    required:true,
     lowercase:true,
-  },
-  email:{
-    type:String,
-    required:true,
-    unique:true,
-    index:true,
   },
   wilaya :{
     type: String,
-    required:true,
   },
   password:{
     type: String,
-    required:true,
 
   },
   birthday:{
     type:Date,
-  },
+  }
+},
+facebook:{
+    id:{
+      type:String,
+      //required:true
+    },
+    name:{
+      type:String,
+      //required: true
+    }
+},
   registerDate:{
     type:Date,
     default:new Date,
   },
+  username:{
+    type: String,
+  //  required:true,
+    unique:true,
+  },
+  email:{
+    type:String,
+  //  required:true,
+    index:true,
+    unique: true,
+  }
 
 });
 
@@ -84,6 +93,10 @@ userSchema.methods.validateFormInputs=(req)=>{
     errors[i]=errors[i].msg;
   }
   return errors;
+}
+
+userSchema.methods.getUserByFacebookId=(userFacebookId,callback)=>{
+  user.findOne({"facebook.id":userFacebookId},callback);
 }
 
 
