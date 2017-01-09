@@ -21,14 +21,14 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(function(id, done) {
   User.getUserById(id, function(err, user) {
-    console.log("deserializeUser"+user);
     done(err, user);
   });
 });
 
 
-router.route("/login").post(passport.authenticate('local',{failureRedirect: '/layout/register'}),
+router.route("/login").post(passport.authenticate('local',{failureRedirect: '/layout/index'}),
     function(req, res) {
+          console.log("the user is ",req.user);
          res.redirect("/layout/index");
     });
 module.exports=router;
