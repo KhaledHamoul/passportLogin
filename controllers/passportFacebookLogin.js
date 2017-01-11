@@ -3,8 +3,8 @@ const UserPrototype = require('../models/user');
 user=new UserPrototype({});
 module.exports=new FacebookStrategy(
   {
-    clientID: "808855879262183",
-    clientSecret: "b2d9d3a5b70590ac95ceb5f56bf667dd",
+    clientID:  //enter your facebook develloper client Id 
+    clientSecret: //enter your client secret key
     callbackURL: "http://localhost:3000/auth/facebook/callback"
   },
     (accessToken, refreshToken, profile, done)=>{
