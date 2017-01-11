@@ -2,7 +2,7 @@ const UserPrototype = require('../models/user.js');
 const bcrypt = require('bcryptjs');
  var layout;
  var user=new UserPrototype({});
- var errorsContainer=new Array();
+ var errorsContainer= Array;
 
  exports.addUser=(req,res)=>{
 
@@ -83,6 +83,7 @@ const bcrypt = require('bcryptjs');
                  //sending the user to his dashboard
                  layout="../layouts/index";
                  res.locals.user= user;
+                 req.flash("successMessage","you have been registerd");
                  res.render("template/app",{data:{
                        layout,
                  }});

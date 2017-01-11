@@ -7,13 +7,14 @@ module.exports=new LocalStrategy(
         user.getUserByUsernameOrEmail(usernameOrEmail,null,(err,userCredential)=>{
           if(err) throw err ;
           if(!userCredential) {
-            return done(null,false); // with an error massege
+            return done(null,false,{message:"no such uername or email"}); // with an error massege
           }
           user.comparePassword(password,userCredential.local.password,(err,isMatch)=>{
               if (isMatch) {
-                return done(null,userCredential);
+                return done(null,userCredential,{message:'you are logged in'});
+
               } else {
-                return done(null,false); // with an error message
+                return done(null,false,{message:"invalid password"}); // with an error message
                 // password doesn't match and the log in is impossible
               }
           });

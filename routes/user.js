@@ -31,20 +31,23 @@ passport.serializeUser((user, done)=>{
             });
 
 passport.deserializeUser((id, done)=>{
-  User.getUserById((err, user)=>{
+  User.getUserById(id,(err, user)=>{
                   done(err, user);
+
             });
         });
 
 
-router.route("/login").post(passport.authenticate('local'),(req, res)=>{
+router.route("/login").post(passport.authenticate('local',{ failureRedirect:'/layout/login', failureFlash: true, successFlash:true}),(req, res)=>{
      res.redirect("/layout/index");
 });
 
-router.route('/facebook').get(passport.authenticate('facebook'));
+router.route('/facebook').get(passport.authenticate('facebook',{ failureRedirect:'/layout/login' ,failureFlash: true, successFlash:true}));
 
-router.route('/facebook/callback').get(passport.authenticate('facebook'),(req, res)=>{
-     res.redirect("/layout/index");
+router.route('/facebook/callback').get(passport.authenticate('facebook',
+      { failureRedirect:'/layout/register' ,failureFlash: true ,successFlash:true}),
+      (req, res)=>{
+          res.redirect("/layout/index");
 });
 
 

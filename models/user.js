@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const  PasswordHashingCycle = 8;
 
-mongoose.connect('mongodb://localhost:27017/letsMeet');
+mongoose.connect('mongodb://localhost:27017/yourDatabase');
 
 var userSchema=new mongoose.Schema({
 local:{
@@ -24,11 +24,11 @@ local:{
 facebook:{
     id:{
       type:String,
-      //required:true
+      required:true
     },
     name:{
       type:String,
-      //required: true
+      required: true
     }
 },
   registerDate:{
@@ -37,12 +37,12 @@ facebook:{
   },
   username:{
     type: String,
-  //  required:true,
+    required:true,
     unique:true,
   },
   email:{
     type:String,
-  //  required:true,
+    required:true,
     index:true,
     unique: true,
   }
@@ -86,7 +86,7 @@ userSchema.methods.validateFormInputs=(req)=>{
   req.checkBody('username', 'username is required').notEmpty();
   req.checkBody('name', 'name is required').notEmpty()
   req.checkBody('email', 'Invalid eamil adress').isEmail();
-  req.checkBody('password', 'not the same password').equals(req.body.password2);
+  req.checkBody('password', 'unmatch passwords').equals(req.body.password2);
 
   var errors=req.validationErrors();
   for (var i = 0; i < errors.length; i++) {

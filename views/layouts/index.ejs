@@ -1,6 +1,10 @@
-     <% if (user){%>
+     <% if(user){%>
     <h2 class="page-header">Profile</h2>
-    <p>Hi <strong><%=user.username%></strong> you are logged in!</p>
+    <p>Hi <strong><%=user.username%></strong></strong> you are logged in!</p>
+    <%if(successMessage>0){%>
+    <div class="alert alert-success"><h3><%=successMessage%></h3></div>
+    <%}%>
+
   <%}else{%>
         <div class="alert alert-danger"><h3>you need to register or to login to your account</h3></div>
       <%}%>

@@ -7,7 +7,7 @@ const expressValidator = require('express-validator');
 const passport = require('passport');
 const localStrategy = require('passport-local');
 const path = require('path');
-const flash = require('flash');
+const flash = require('connect-flash')
 
 
 
@@ -21,8 +21,7 @@ const user = require(__dirname+'/routes/user.js');
 // setting the app
 var app=express();
 
-//setting up the static file folder
-app.use(express.static(__dirname+"/public"));
+
 
 //setup the view engine
 app.set("views",path.join(__dirname,"views"));
@@ -74,6 +73,8 @@ app.use(flash());
 
 //setting an important global varibles
 app.use((req,res,next)=>{
+  res.locals.successMessage=req.flash("success") || null;
+  res.locals.failureMessage=req.flash("error") || null ;
   res.locals.user=req.user || null;
   next();
 });
@@ -83,6 +84,8 @@ app.use("/layout",layout);
 app.use("/user",user);
 app.use("/auth",user)
 
+//setting up the static file folder
+app.use(express.static(__dirname+"/public"));
 
 //listning...
 app.listen(3000,(err)=>{
