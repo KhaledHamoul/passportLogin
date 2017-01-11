@@ -1,7 +1,7 @@
-exports.sendLayout=(req,rep)=>{
+exports.sendLayout=(req,res,next)=>{
   var layout="../layouts/"+req.params.layout;
-  rep.render("template/app",{data:{
+  res.render("template/app",{data:{
                                       layout
                                     }});
-
+                              next();
 }

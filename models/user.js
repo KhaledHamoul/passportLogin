@@ -5,38 +5,46 @@ const  PasswordHashingCycle = 8;
 mongoose.connect('mongodb://localhost:27017/yourDatabase');
 
 var userSchema=new mongoose.Schema({
+local:{
+  name :{
+    type:String,
+    lowercase:true,
+  },
+  wilaya :{
+    type: String,
+  },
+  password:{
+    type: String,
+  },
+  birthday:{
+    type:Date,
+  }
+},
+facebook:{ 
+    id:{
+      type:String,
+      required:true
+    },
+    name:{
+      type:String,
+      required: true
+    }
+},
+  registerDate:{
+    type:Date,
+    default:new Date,
+  },
   username:{
     type: String,
     required:true,
     unique:true,
   },
-  name :{
-    type:String,
-    required:true,
-    lowercase:true,
-  },
   email:{
     type:String,
     required:true,
-    unique:true,
     index:true,
-  },
-  wilaya :{
-    type: String,
-    required:true,
-  },
-  password:{
-    type: String,
-    required:true,
-
-  },
-  birthday:{
-    type:Date,
-  },
-  registerDate:{
-    type:Date,
-    default:new Date,
-  },
+    unique: true,
+  }
 
 });
 
@@ -77,13 +85,17 @@ userSchema.methods.validateFormInputs=(req)=>{
   req.checkBody('username', 'username is required').notEmpty();
   req.checkBody('name', 'name is required').notEmpty()
   req.checkBody('email', 'Invalid eamil adress').isEmail();
-  req.checkBody('password', 'not the same password').equals(req.body.password2);
+  req.checkBody('password', 'unmatch passwords').equals(req.body.password2);
 
   var errors=req.validationErrors();
   for (var i = 0; i < errors.length; i++) {
     errors[i]=errors[i].msg;
   }
   return errors;
+}
+
+userSchema.methods.getUserByFacebookId=(userFacebookId,callback)=>{
+  user.findOne({"facebook.id":userFacebookId},callback);
 }
 
 

@@ -2,7 +2,7 @@ const UserPrototype = require('../models/user.js');
 const bcrypt = require('bcryptjs');
  var layout;
  var user=new UserPrototype({});
- var errorsContainer=new Array();
+ var errorsContainer= Array;
 
  exports.addUser=(req,res)=>{
 
@@ -21,10 +21,10 @@ const bcrypt = require('bcryptjs');
 
     // hydration
     user.username=req.body.username;
-    user.name =req.body.name;
+    user.local.name =req.body.name;
     user.email=req.body.email;
-    user.wilaya =req.body.city;
-    user.birthday=req.body.birthday;
+    user.local.wilaya =req.body.city;
+    user.local.birthday=req.body.birthday;
 
 
     // checking if te user dosn't exist
@@ -66,7 +66,7 @@ const bcrypt = require('bcryptjs');
                                               }
                                             });
                               }
-                    user.password=hashedPassword;
+                    user.local.password=hashedPassword;
                     user.save((err)=>{
                          if(err)  {
                                      layout="../layouts/register";
@@ -83,6 +83,7 @@ const bcrypt = require('bcryptjs');
                  //sending the user to his dashboard
                  layout="../layouts/index";
                  res.locals.user= user;
+                 req.flash("successMessage","you have been registerd");
                  res.render("template/app",{data:{
                        layout,
                  }});
