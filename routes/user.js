@@ -5,7 +5,7 @@ const register = require('../controllers/registration');
 const LocalLogin = require('../controllers/passportLocalLogIn');
 const facebookLogin = require('../controllers/passportFacebookLogin');
 const logout = require('../controllers/logout');
-
+const flash = require('connect-flash');
 const UserPrototype = require('../models/user');
 const User= new UserPrototype({});
 
@@ -46,10 +46,15 @@ router.route("/login").post(passport.authenticate('local',{ failureRedirect:'/la
 router.route('/facebook').get(passport.authenticate('facebook',{ failureRedirect:'/layout/login' ,failureFlash: true, successFlash:true}));
 
 router.route('/facebook/callback').get(passport.authenticate('facebook',
-      { failureRedirect:'/layout/register' ,failureFlash: true ,successFlash:true}),
+      { failureRedirect:'/layout/login' ,failureFlash: true ,successFlash:true}),
       (req, res)=>{
           res.redirect("/layout/index");
 });
 
- 
+router.route('/connect/facebook').get(); /// facebook authorization
+
+
+
+
+
 module.exports=router;

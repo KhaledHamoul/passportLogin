@@ -1,14 +1,13 @@
 const UserPrototype = require('../models/user.js');
 const bcrypt = require('bcryptjs');
  var layout;
- var user=new UserPrototype({});
+ var user;;
  var errorsContainer= Array;
 
  exports.addUser=(req,res)=>{
-
+   if(req.user) user=req.user; else user=new UserPrototype({})
    // validating the user inuput
    errorsContainer=user.validateFormInputs(req);
-
    if(errorsContainer){
        layout="../layouts/register";
        res.render("template/app",{data:{
@@ -20,15 +19,15 @@ const bcrypt = require('bcryptjs');
 
 
     // hydration
-    user.username=req.body.username;
+    user.local.username=req.body.username;
     user.local.name =req.body.name;
-    user.email=req.body.email;
+    user.local.email=req.body.email;
     user.local.wilaya =req.body.city;
     user.local.birthday=req.body.birthday;
 
 
     // checking if te user dosn't exist
-     user.getUserByUsernameOrEmail(user.username,user.email,(err,isExisted)=>{
+     user.getUserByUsernameOrEmail(user.local.username,user.local.email,(err,isExisted)=>{
                  if(err){
                    layout="../layouts/register";
                    errorsContainer.push("try again , something went wrong");
@@ -41,7 +40,7 @@ const bcrypt = require('bcryptjs');
 
            if(isExisted){
 
-             if(isExisted.username==newUser.username){
+             if(isExisted.local.username==user.local.username){
                errorsContainer.push("username already exists");
              }else{
                 errorsContainer.push("email already exists")
@@ -62,7 +61,7 @@ const bcrypt = require('bcryptjs');
                                 errorsContainer.push("try again , something went wrong");
                                  res.status(400).render("template/app",{data:{
                                                 layout,
-                                                errors:errorsList
+                                                errorsContainer
                                               }
                                             });
                               }
@@ -73,7 +72,7 @@ const bcrypt = require('bcryptjs');
                                      errorsContainer.push("try again , something went wrong");
                                      res.staus(400).render("template/app",{data:{
                                                     layout,
-                                                    errors:errorsList
+                                                    errorsContainer
                                                   }
                                                 });
                          }

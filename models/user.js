@@ -10,6 +10,15 @@ local:{
     type:String,
     lowercase:true,
   },
+  username:{
+    type: String,
+    unique:true,
+  },
+  email:{
+    type:String,
+    index:true,
+    unique: true,
+  },
   wilaya :{
     type: String,
   },
@@ -20,12 +29,16 @@ local:{
     type:Date,
   }
 },
-facebook:{ 
+facebook:{
     id:{
       type:String,
       required:true
     },
     name:{
+      type:String,
+      required: true
+    },
+    token:{
       type:String,
       required: true
     }
@@ -34,17 +47,6 @@ facebook:{
     type:Date,
     default:new Date,
   },
-  username:{
-    type: String,
-    required:true,
-    unique:true,
-  },
-  email:{
-    type:String,
-    required:true,
-    index:true,
-    unique: true,
-  }
 
 });
 
@@ -52,10 +54,10 @@ facebook:{
 userSchema.methods.getUserByUsernameOrEmail=(username,email,callback)=>{
      user.findOne({
        "$or":[
-                {username:username},
+                {"local.username":username},
                 {"$or":[
-                  {email:email},
-                  {email:username} // in the case the user want to login with his email
+                  {"local.email":email},
+                  {"local.email":username} // in the case the user want to login with his email
               ]
             }
           ]

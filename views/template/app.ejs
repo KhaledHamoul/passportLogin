@@ -22,6 +22,16 @@
           <ul class="nav nav-pills pull-right">
               <% if(user){%>
               <li role="presentation"><a href="/user/logout">Logout</a></li>
+
+
+              <%if(user.facebook.name && !user.local.username){%> 
+                <li role="presentation"><a href="/layout/register">local connect</a></li>
+                    <%}%>
+              <%if(!user.facebook.name && user.local.username){%>
+              <li role="presentation"><a href="user/connect/facebook">add your facebook account</a></li>
+              <%}%>
+
+
               <%}else{%>
               <li role="presentation"><a href="/layout/login" >Login</a></li>
               <li role="presentation"><a href="/auth/facebook" >facebook login</a></li>
