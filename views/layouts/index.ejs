@@ -1,15 +1,15 @@
      <% if(user){%>
     <h2 class="page-header">Profile</h2>
-    <p>Hi <strong><%=user.local.username%></strong></strong> you are logged in with :</p>
-     <ul>
-       <%if(user.facebook.id){%>
-          <li><h3>Facebook acount !</h3></li>
+    <p>Hi <strong><%=user.local.username%></strong></strong> welcome to your dashbord</p>
+       <%if(user.facebook.token){%>
+          <a href="/user/unlink/facebook"><h4>unlink your facebook account</h4></a>
          <%}%>
-         <%if(user.local.username){%>
-           <li><h3>local acount !</h3></li>
-           <%}%>
-     </ul>
-
     <%}else{%>
         <div class="alert alert-danger"><h3>you need to register or to login to your account</h3></div>
       <%}%>
+      <%if(successMessage.length>0){%>
+          <div class="alert alert-success"><h2><%=successMessage%></h2></div>
+        <%}%>
+        <%if(failureMessage.length>0){%>
+        <div class="alert alert-danger"><h2><%=failureMessage%></h2></div>
+          <%}%>

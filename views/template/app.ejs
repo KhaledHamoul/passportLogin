@@ -24,11 +24,11 @@
               <li role="presentation"><a href="/user/logout">Logout</a></li>
 
 
-              <%if(user.facebook.name && !user.local.username){%> 
+              <%if(user.facebook.name && !user.local.username){%>
                 <li role="presentation"><a href="/layout/register">local connect</a></li>
                     <%}%>
               <%if(!user.facebook.name && user.local.username){%>
-              <li role="presentation"><a href="user/connect/facebook">add your facebook account</a></li>
+              <li role="presentation"><a href="/user/connect/facebook">add your facebook account</a></li> 
               <%}%>
 
 

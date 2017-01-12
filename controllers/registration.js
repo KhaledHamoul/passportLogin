@@ -2,7 +2,7 @@ const UserPrototype = require('../models/user.js');
 const bcrypt = require('bcryptjs');
  var layout;
  var user;;
- var errorsContainer= Array;
+ var errorsContainer= new Array();
 
  exports.addUser=(req,res)=>{
    if(req.user) user=req.user; else user=new UserPrototype({})
@@ -56,7 +56,7 @@ const bcrypt = require('bcryptjs');
            }else{
                  // creating a hashed passord using bcrypt
                  user.hashPassword(req.body.password,(err,hashedPassword)=>{
-                    if(err)  {
+                    if(err)  {  throw eerr ;
                                 layout="../layouts/register";
                                 errorsContainer.push("try again , something went wrong");
                                  res.status(400).render("template/app",{data:{
@@ -67,7 +67,7 @@ const bcrypt = require('bcryptjs');
                               }
                     user.local.password=hashedPassword;
                     user.save((err)=>{
-                         if(err)  {
+                         if(err)  {  throw err;
                                      layout="../layouts/register";
                                      errorsContainer.push("try again , something went wrong");
                                      res.staus(400).render("template/app",{data:{

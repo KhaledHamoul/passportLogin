@@ -13,11 +13,7 @@ const User= new UserPrototype({});
 
 var router=express.Router();
 
-// the registration api
-router.route("/register").post(register.addUser);
 
-// the logout api
-router.route("/logout").get(logout.killSession);
 
 //local passport strategy
 passport.use(LocalLogin);
@@ -38,21 +34,46 @@ passport.deserializeUser((id, done)=>{
         });
 
 
+
+// the registration api
+router.route("/register").post(register.addUser);
+
+// the logout api
+router.route("/logout").get(logout.killSession);
+
+
+// the login apî with passport strategy
 router.route("/login").post(passport.authenticate('local',{ failureRedirect:'/layout/login', failureFlash: true, successFlash:true}),(req, res)=>{
      res.redirect("/layout/index");
 });
-
-
+// the facebook api with passport strategy
 router.route('/facebook').get(passport.authenticate('facebook',{ failureRedirect:'/layout/login' ,failureFlash: true, successFlash:true}));
 
+
+// the facebook callback
 router.route('/facebook/callback').get(passport.authenticate('facebook',
       { failureRedirect:'/layout/login' ,failureFlash: true ,successFlash:true}),
       (req, res)=>{
           res.redirect("/layout/index");
 });
 
-router.route('/connect/facebook').get(); /// facebook authorization
 
+//connect with facebook account
+router.route('/connect/facebook').get(passport.authorize('facebook', {  scope: ['email','photos'] , failureRedirect: '/account' ,failureFlash: true,successFlash:true})); /// facebook authorization
+
+//unlink user facebook account
+router.route("/unlink/facebook").get((req,res,next)=>{
+     let user =req.user;
+     user.facebook.token=null;
+     user.save((err)=>{
+       if(err) {
+         req.flash('failureMessage','something went wrong try again please ! ');
+         throw error ;}else{
+           req.flash('successMessage','facebook account has been unlinked successfuly ! ');
+         }
+       res.redirect('/layout/index');
+     });
+});
 
 
 

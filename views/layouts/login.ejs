@@ -1,8 +1,10 @@
 
       <h2 class="page-header">Account Login</h2>
+
       <%if(failureMessage.length>0){%>
      <div class="alert alert-danger"><h3><%=failureMessage%></h3></div>
      <%}%>
+
     <form method="post" action="/user/login">
     <div class="form-group">
       <label>Username</label>

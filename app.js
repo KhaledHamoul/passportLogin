@@ -73,8 +73,8 @@ app.use(flash());
 
 //setting an important global varibles
 app.use((req,res,next)=>{
-  res.locals.successMessage=req.flash("success") || null;
-  res.locals.failureMessage=req.flash("error") || null ;
+  res.locals.successMessage=req.flash("success") || null || req.flash("successMessage");
+  res.locals.failureMessage=req.flash("error") || null || req.flash("failureMessage") ;
   res.locals.user=req.user || null;
   next();
 });
@@ -82,7 +82,7 @@ app.use((req,res,next)=>{
 
 app.use("/layout",layout);
 app.use("/user",user);
-app.use("/auth",user)
+app.use("/auth",user);
 
 //setting up the static file folder
 app.use(express.static(__dirname+"/public"));
