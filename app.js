@@ -7,8 +7,9 @@ const expressValidator = require('express-validator');
 const passport = require('passport');
 const localStrategy = require('passport-local');
 const path = require('path');
-const flash = require('connect-flash')
-
+const flash = require('connect-flash');
+const MongoStore = require('connect-mongo')(session);
+const mongoose = require('mongoose');
 
 
 //exporting router
@@ -41,10 +42,13 @@ app.use(session({
   secret: 'keyboard cat',
   resave: true ,
   saveUninitialized: true,
+  store: new MongoStore({
+        mongooseConnection: mongoose.connection,
+        ttl: 1 * 24 * 60 * 60  //the session will last for 1 day
+       })
 }));
 
 //setting up passport middlware
-app.use(session());
 app.use(passport.initialize());
 app.use(passport.session());
 
